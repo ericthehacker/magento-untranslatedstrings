@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <EW_UntranslatedStrings>
+            <version>1.0.0</version>
+        </EW_UntranslatedStrings>
+    </modules>
+    <global>
+        <blocks>
+            <ew_untranslatedstrings>
+                <class>EW_UntranslatedStrings_Block</class>
+            </ew_untranslatedstrings>
+        </blocks>
+        <helpers>
+            <ew_untranslatedstrings>
+                <class>EW_UntranslatedStrings_Helper</class>
+            </ew_untranslatedstrings>
+        </helpers>
+        <models>
+            <ew_untranslatedstrings>
+                <class>EW_UntranslatedStrings_Model</class>
+                <resourceModel>ew_untranslatedstrings_resource</resourceModel>
+            </ew_untranslatedstrings>
+            <ew_untranslatedstrings_resource>
+                <class>EW_UntranslatedStrings_Model_Resource</class>
+                <entities>
+                    <string>
+                        <table>ew_untranslatedstrings_strings</table>
+                    </string>
+                </entities>
+            </ew_untranslatedstrings_resource>
+
+            <core>
+                <rewrite>
+                    <translate>EW_UntranslatedStrings_Model_Core_Translate</translate>
+                </rewrite>
+            </core>
+        </models>
+        <resources>
+            <ew_untranslatedstrings_setup>
+                <setup>
+                    <module>EW_UntranslatedStrings</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+            </ew_untranslatedstrings_setup>
+        </resources>
+    </global>
+
+    <default>
+        <dev>
+            <translate>
+                <untranslated_strings_enabled>0</untranslated_strings_enabled>
+            </translate>
+        </dev>
+    </default>
+</config>
