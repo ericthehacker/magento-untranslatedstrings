@@ -23,4 +23,32 @@ class EW_UntranslatedStrings_Model_Resource_String extends Mage_Core_Model_Resou
             )
         );
     }
+
+    public function getLocaleStrings($locale) {
+        $read = $this->getReadConnection();
+
+        $select = $read->select();
+
+        $select->from(array('main_table' => $this->getMainTable()));
+        $select->reset(Zend_Db_Select::COLUMNS);
+        $select->columns(
+            array(
+                'id',
+                'untranslated_string',
+                'translation_code',
+                'translation_module'
+            )
+        );
+        $select->where('locale = ?', $locale);
+        $select->distinct(true);
+
+        $rawResults = $select->query()->fetchAll();
+
+        return $rawResults;
+    }
+
+    public function purgeStrings(array $ids) {
+        $where = $this->_getWriteAdapter()->quoteInto('id in (?)', $ids);
+        $this->_getWriteAdapter()->delete($this->getMainTable(), $where);
+    }
 }
