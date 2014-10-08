@@ -14,7 +14,9 @@ $ modman clone https://github.com/ericthehacker/magento-untranslatedstrings.git
 
 ## Configuration
 
-Visit System -> Config -> Developer -> Translate Inline -> Log Untranslated Strings and set it to Yes.
+Visit System -> Config -> Developer -> Translate Inline -> Log Untranslated Strings and set it to Yes to enable untranslated string logging. When pages are rendered, any page missing translations for the current locale are logged.
+
+To log results from more than one locale at a time, enable System -> Config -> Developer -> Translate Inline -> Batch Check Translation Locales, then select some locales in the multiselect below. With this enabled, when a page is rendered, each translated string is checked against each of the selected locales and logged individually if there is a translation gap.
 
 ## Expected Results
 
