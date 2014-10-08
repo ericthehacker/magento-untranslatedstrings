@@ -19,3 +19,7 @@ Visit System -> Config -> Developer -> Translate Inline -> Log Untranslated Stri
 ## Expected Results
 
 Currently, the module only collects untranslated strings into the table `ew_untranslatedstrings_strings`. If I have more time I'll add a proper Magento report with filter and export capabilities -- see the issues for some of my ideas. 
+
+## Caveat
+
+Currently, the module introduces a preformance penalty, **only if enabled in system configuration**. That means, it should be safe to have installed on both production and stage, but you probably don't want to enable it on production all the time. Note that it's disabled by default.
