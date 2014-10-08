@@ -15,13 +15,7 @@ class EW_UntranslatedStrings_Model_String extends Mage_Core_Model_Abstract
         $strings = $this->getResource()->getLocaleStrings($locale);
 
         /* @var $translate EW_UntranslatedStrings_Model_Core_Translate */
-        $translate = Mage::getModel('ew_untranslatedstrings/core_translate');
-        $translate->init('frontend'); //@todo: const
-        $translate->setConfig(
-            array(
-                Mage_Core_Model_Translate::CONFIG_KEY_LOCALE => $locale
-            )
-        );
+        $translate = Mage::helper('ew_untranslatedstrings')->getTranslator($locale);
 
         $purgeIds = array();
         foreach($strings as $string) {
