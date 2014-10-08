@@ -3,9 +3,6 @@
 class EW_UntranslatedStrings_Model_Core_Translate extends Mage_Core_Model_Translate
 {
     public function hasTranslation($text, $code) {
-        $keys = array_keys($this->getData());
-        sort($keys);
-
         if (array_key_exists($code, $this->getData())) {
             return true;
         }
