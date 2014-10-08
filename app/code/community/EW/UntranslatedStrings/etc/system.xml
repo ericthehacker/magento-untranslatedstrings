@@ -7,7 +7,10 @@
                     <fields>
                         <untranslated_strings_enabled translate="label comment">
                             <label>Log Untranslated Strings</label>
-                            <comment>If set to yes, untranslated strings will be logged to database.</comment>
+                            <comment>
+                                If set to yes, untranslated strings will be logged to database.
+                                WARNING: this adds a small performance penalty if enabled.
+                            </comment>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <config_path>dev/translate/untranslated_strings_enabled</config_path>
@@ -16,6 +19,36 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </untranslated_strings_enabled>
+                        <untranslated_strings_batch_locales_enabled>
+                            <label>Batch Check Translation Locales</label>
+                            <comment>
+                                If set to yes, you can select locale(s) to check when a string is translated,
+                                instead of just the store's configured locale. If set to no, only the store's
+                                configured locale is used.
+                                WARNING: this adds a greater performance penalty if enabled.
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <config_path>dev/translate/untranslated_strings_batch_locales_enabled</config_path>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </untranslated_strings_batch_locales_enabled>
+                        <untranslated_strings_locales>
+                            <label>Untranslated Locales to Log</label>
+                            <comment>Instead of the store's configured locale, these locale(s) will be checked and logged.</comment>
+                            <config_path>dev/translate/untranslated_strings_locales</config_path>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>adminhtml/system_config_source_locale</source_model>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <untranslated_strings_batch_locales_enabled>1</untranslated_strings_batch_locales_enabled>
+                            </depends>
+                        </untranslated_strings_locales>
                     </fields>
                 </translate_inline>
             </groups>
