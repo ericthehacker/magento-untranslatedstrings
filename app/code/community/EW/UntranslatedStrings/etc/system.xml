@@ -34,6 +34,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <untranslated_strings_enabled>1</untranslated_strings_enabled>
+                            </depends>
                         </untranslated_strings_batch_locales_enabled>
                         <untranslated_strings_locales>
                             <label>Untranslated Locales to Log</label>
@@ -46,6 +49,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                             <depends>
+                                <untranslated_strings_enabled>1</untranslated_strings_enabled>
                                 <untranslated_strings_batch_locales_enabled>1</untranslated_strings_batch_locales_enabled>
                             </depends>
                         </untranslated_strings_locales>
