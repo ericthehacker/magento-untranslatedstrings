@@ -12,16 +12,12 @@ class EW_UntranslatedStrings_Block_Adminhtml_Report_Grid extends Mage_Adminhtml_
         $collection = Mage::getResourceModel('ew_untranslatedstrings/string_collection');
         $collection->joinStoreCode();
 
-        //echo $collection->getSelect()->assemble();die;
-
         $this->setCollection($collection);
 
         return parent::_prepareCollection();
     }
 
     protected function _prepareColumns() {
-        $baseUrl = $this->getUrl();
-
         $this->addColumn('id', array(
             'header'    => $this->__('ID'),
             'align'     => 'left',
@@ -75,9 +71,5 @@ class EW_UntranslatedStrings_Block_Adminhtml_Report_Grid extends Mage_Adminhtml_
         ));
 
         return parent::_prepareColumns();
-    }
-
-    public function getRowUrl($row) {
-        return $this->getUrl('*/*/edit', array('id' => $row->getId()));
     }
 }

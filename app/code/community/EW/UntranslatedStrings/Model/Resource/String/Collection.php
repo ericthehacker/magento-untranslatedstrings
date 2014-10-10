@@ -15,7 +15,7 @@ class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_
         if(!$this->_joinedStoreCode) {
             $this->join(
                 array('stores' => 'core/store'),
-                "`stores`.`store_id` = `main_table`.`store_id",
+                "`stores`.`store_id` = `main_table`.`store_id`",
                 array('store_code' => 'stores.code')
             );
         }
