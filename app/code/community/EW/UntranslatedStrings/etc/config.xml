@@ -46,6 +46,28 @@
         </resources>
     </global>
 
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <ew_untranslatedstrings before="Mage_Adminhtml">EW_UntranslatedStrings_Adminhtml</ew_untranslatedstrings>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <ew_untranslatedstrings>
+                    <file>ew_untranslatedstrings.xml</file>
+                </ew_untranslatedstrings>
+            </updates>
+        </layout>
+    </adminhtml>
+
     <default>
         <dev>
             <translate>
