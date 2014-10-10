@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <report>
+            <children>
+                <ew_untranslatedstrings translate="title" module="ew_untranslatedstrings">
+                    <title>Untranslated Strings</title>
+                    <sort_order>1000</sort_order>
+                    <children>
+                    <activity_report translate="title" module="reports">
+                        <title>Untranslated Strings Report</title>
+                        <action>adminhtml/untranslated/report</action>
+                    </activity_report>
+                    </children>
+                </ew_untranslatedstrings>
+            </children>
+        </report>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <report>
+                        <children>
+                            <ew_untranslatedstrings translate="title" module="ew_untranslatedstrings">
+                                <title>Untranslated Strings</title>
+                                <children>
+                                    <activity translate="title">
+                                        <title>Untranslated Strings Report</title>
+                                    </activity>
+                                </children>
+                            </ew_untranslatedstrings>
+                        </children>
+                    </report>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

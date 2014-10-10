@@ -1,2 +1,3 @@
 app/code/community/EW/UntranslatedStrings
 app/etc/modules/EW_UntranslatedStrings.xml
+app/design/adminhtml/default/default/layout/ew_untranslatedstrings.xml
