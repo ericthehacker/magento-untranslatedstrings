@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <adminhtml_untranslated_report>
+        <reference name="content">
+            <block type="ew_untranslatedstrings/adminhtml_report" name="ew_untranslatedstrings.report" />
+        </reference>
+    </adminhtml_untranslated_report>
+</layout>

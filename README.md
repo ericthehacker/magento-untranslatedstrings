@@ -18,10 +18,14 @@ Visit *System -> Config -> Developer -> Translate Inline -> Log Untranslated Str
 
 To log results from more than one locale at a time, enable *System -> Config -> Developer -> Translate Inline -> Batch Check Translation Locales*, then select some locales in the multiselect below. With this enabled, when a page is rendered, each translated string is checked against each of the selected locales and logged individually if there is a translation gap.
 
-## Expected Results
+## Usage
 
-Currently, the module only collects untranslated strings into the table `ew_untranslatedstrings_strings`. If I have more time I'll add a proper Magento report with filter and export capabilities -- see the issues for some of my ideas. 
+After enabling the functionality in the system config as stated above, any time a string is run through the translater but no translation for the selected locale(s) is found, the string along with other useful information will be logged.
+
+To see a report of this log, visit *Reports -> Untranslated Strings -> Untranslated Strings Report* in the Magento admin. This report shows all logged untranslated strings and allows you to filter, sort, and export.
 
 ## Caveat
 
-Currently, the module introduces a preformance penalty, **only if enabled in system configuration**. That means, it should be safe to have installed on both production and stage, but you probably don't want to enable it on production all the time. Note that it's disabled by default.
+Currently, the module introduces a small to moderate preformance penalty, depending on the number of locales you have configured to check. However, this penalty is realized **only if enabled in system configuration**. That means that it should be safe to have installed on both production and stage, but you probably don't want to enable it on production all the time. 
+
+Note that it's disabled by default.
