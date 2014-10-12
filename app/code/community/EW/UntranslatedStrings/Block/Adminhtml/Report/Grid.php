@@ -11,6 +11,7 @@ class EW_UntranslatedStrings_Block_Adminhtml_Report_Grid extends Mage_Adminhtml_
         /* var $collection EW_UntranslatedStrings_Model_Resource_String_Collection */
         $collection = Mage::getResourceModel('ew_untranslatedstrings/string_collection');
         $collection->joinStoreCode();
+        $collection->setOrder('encounter_count', Varien_Db_Select::SQL_DESC);
 
         $this->setCollection($collection);
 
@@ -23,6 +24,7 @@ class EW_UntranslatedStrings_Block_Adminhtml_Report_Grid extends Mage_Adminhtml_
             'align'     => 'left',
             'width'     => '75px',
             'index'     => 'id',
+            'type'      => 'number'
         ));
 
         $this->addColumn('store_code', array(
@@ -68,6 +70,14 @@ class EW_UntranslatedStrings_Block_Adminhtml_Report_Grid extends Mage_Adminhtml_
             'index'     => 'date_found',
             'width'     => '175px',
             'type'      => 'datetime',
+        ));
+
+        $this->addColumn('encounter_count', array(
+            'header'    => $this->__('Popularity'),
+            'align'     => 'left',
+            'width'     => '75px',
+            'index'     => 'encounter_count',
+            'type'      => 'number'
         ));
 
         $this->addExportType('*/*/exportCsv', $this->__('CSV'));
