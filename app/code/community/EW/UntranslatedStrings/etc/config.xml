@@ -2,7 +2,7 @@
 <config>
     <modules>
         <EW_UntranslatedStrings>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </EW_UntranslatedStrings>
     </modules>
     <global>
@@ -44,6 +44,17 @@
                 </setup>
             </ew_untranslatedstrings_setup>
         </resources>
+
+        <events>
+            <controller_front_send_response_after>
+                <observers>
+                    <ew_untranslatedstrings>
+                        <class>ew_untranslatedstrings/observer</class>
+                        <method>flushUntranslatedStrings</method>
+                    </ew_untranslatedstrings>
+                </observers>
+            </controller_front_send_response_after>
+        </events>
     </global>
 
     <admin>

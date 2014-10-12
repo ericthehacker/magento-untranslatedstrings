@@ -6,20 +6,59 @@ class EW_UntranslatedStrings_Model_Resource_String extends Mage_Core_Model_Resou
         $this->_init('ew_untranslatedstrings/string', 'id');
     }
 
-    public function writeUntranslatedString($code, $module, $string, $storeId, $locale, $url) {
+    /**
+     * Write set of untranslated strings. Expects array of format
+     * array(
+     *     array(
+     *         'code' => code,
+     *         'module' => module,
+     *         'text' => untranslated string,
+     *         'store_id' => store ID,
+     *         'locale' => locale,
+     *         'url' => url found
+     *     ),
+     *     ...
+     * )
+     *
+     * @param array $strings
+     */
+    public function writeUntranslatedStrings(array $strings) {
         $write = $this->_getWriteAdapter();
 
-        $write->insertIgnore(
-            $this->getMainTable(),
-            array(
-                'id' => null,
-                'store_id' => $storeId,
-                'untranslated_string' => $string,
-                'translation_code' => $code,
-                'translation_module' => $module,
-                'locale' => $locale,
-                'url_found' => $url,
+        // map expected keys to database columns
+        $columnMapping = array(
+            'code' => 'translation_code',
+            'module' => 'translation_module',
+            'text' => 'untranslated_string',
+            'store_id' => 'store_id',
+            'locale' => 'locale',
+            'url' => 'url_found'
+        );
+
+        $insertValues = array();
+
+        foreach($strings as $string) {
+            $insertValue = array(
                 'date_found' => Zend_Date::now()->toString(Zend_Date::ISO_8601)
+            );
+
+            foreach($string as $key => $value) {
+                $insertValue[ $columnMapping[$key] ] = $value;
+            }
+
+            $insertValues[] = $insertValue;
+        }
+
+        $write->insertOnDuplicate(
+            $this->getMainTable(),
+            $insertValues,
+            array(
+                'encounter_count' => new Zend_Db_Expr(
+                    sprintf(
+                        '%s + 1',
+                        $write->quoteIdentifier('encounter_count')
+                    )
+                )
             )
         );
     }
