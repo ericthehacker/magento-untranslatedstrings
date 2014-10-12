@@ -2,6 +2,7 @@
 
 class EW_UntranslatedStrings_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    const PROFILER_KEY = 'EW_UNTRANSLATED_STRINGS::ALL';
     const CONFIG_PATH_ENABLED = 'dev/translate/untranslated_strings_enabled';
     const CONFIG_PATH_BATCH_LOCALES_ENABLED = 'dev/translate/untranslated_strings_batch_locales_enabled';
     const CONFIG_PATH_BATCH_LOCALES = 'dev/translate/untranslated_strings_locales';
