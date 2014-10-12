@@ -70,6 +70,8 @@ class EW_UntranslatedStrings_Block_Adminhtml_Report_Grid extends Mage_Adminhtml_
             'type'      => 'datetime',
         ));
 
+        $this->addExportType('*/*/exportCsv', $this->__('CSV'));
+
         return parent::_prepareColumns();
     }
 }

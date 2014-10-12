@@ -23,4 +23,17 @@ class EW_UntranslatedStrings_Adminhtml_UntranslatedController extends Mage_Admin
                 break;
         }
     }
+
+    /**
+     * Export to CSV
+     */
+    public function exportCsvAction()
+    {
+        $fileName   = 'untranslated_strings_report.csv';
+        $content    = $this->getLayout()
+                           ->createBlock('ew_untranslatedstrings/adminhtml_report_grid','adminhtml_report.grid')
+                           ->getCsv();
+
+        $this->_prepareDownloadResponse($fileName, $content);
+    }
 }
