@@ -2,6 +2,17 @@
 
 class EW_UntranslatedStrings_Adminhtml_UntranslatedController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * Summary view of untranslated strings
+     */
+    public function indexAction() {
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+
+    /**
+     * Full untranslated strings report
+     */
     public function reportAction() {
         $this->loadLayout();
         $this->renderLayout();

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout>
+    <adminhtml_untranslated_index>
+        <reference name="content">
+            <block type="ew_untranslatedstrings/adminhtml_summary" name="ew_untranslatedstrings.summary" />
+        </reference>
+    </adminhtml_untranslated_index>
+
     <adminhtml_untranslated_report>
         <reference name="content">
             <block type="ew_untranslatedstrings/adminhtml_report" name="ew_untranslatedstrings.report" />
