@@ -9,5 +9,12 @@ class EW_UntranslatedStrings_Block_Adminhtml_Summary extends Mage_Adminhtml_Bloc
         $this->_headerText = Mage::helper('ew_untranslatedstrings')->__('Untranslated Strings Summary');
         parent::__construct();
         $this->_removeButton('add');
+        $this->_addButton(
+            'full_report',
+            array(
+                'label'   => $this->__('View Full Report'),
+                'onclick' => 'window.location=\''. $this->getUrl('*/*/report') .'\'',
+            )
+        );
     }
 }
