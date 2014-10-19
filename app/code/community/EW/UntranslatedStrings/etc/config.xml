@@ -85,6 +85,9 @@
                 <untranslated_strings_enabled>0</untranslated_strings_enabled>
                 <untranslated_strings_enable_matching_key_value_pair>1</untranslated_strings_enable_matching_key_value_pair>
                 <untranslated_strings_ignore_admin>1</untranslated_strings_ignore_admin>
+                <untranslated_strings_exclude><![CDATA[^Mage_Adminhtml::[TGMK]?b$
+^Eltrino_Region::
+                ]]></untranslated_strings_exclude>
                 <untranslated_strings_batch_locales_enabled>0</untranslated_strings_batch_locales_enabled>
             </translate>
         </dev>

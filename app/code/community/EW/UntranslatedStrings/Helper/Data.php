@@ -8,6 +8,7 @@ class EW_UntranslatedStrings_Helper_Data extends Mage_Core_Helper_Abstract
     const CONFIG_PATH_BATCH_LOCALES_ENABLED = 'dev/translate/untranslated_strings_batch_locales_enabled';
     const CONFIG_PATH_BATCH_LOCALES = 'dev/translate/untranslated_strings_locales';
     const CONFIG_PATH_MATCHING_KEY_VALUE_PAIR_ENABLED = 'dev/translate/untranslated_strings_enable_matching_key_value_pair';
+    const CONFIG_PATH_EXCLUDE_CODES = 'dev/translate/untranslated_strings_exclude';
 
     /** @var array */
     private $_translators = null;
@@ -28,6 +29,21 @@ class EW_UntranslatedStrings_Helper_Data extends Mage_Core_Helper_Abstract
         }
 
         return $enabled;
+    }
+
+    /**
+     * Get exclude regex patterns
+     *
+     * @return array
+     */
+    public function getExcludePattens() {
+        $patterns = trim(Mage::getStoreConfig(self::CONFIG_PATH_EXCLUDE_CODES));
+
+        if(empty($patterns)) {
+            return array();
+        }
+
+        return explode("\n", $patterns);
     }
 
     /**

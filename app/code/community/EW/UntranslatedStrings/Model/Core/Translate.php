@@ -159,7 +159,47 @@ class EW_UntranslatedStrings_Model_Core_Translate extends Mage_Core_Model_Transl
         return $this;
     }
 
+    /**
+     * Scrub phrases against excluded phrase patterns
+     *
+     * @param array $phrases
+     * @return array
+     */
+    protected function _scrubExcludedPhrases(array $phrases) {
+        /** @var $patterns array */
+        $patterns = Mage::helper('ew_untranslatedstrings')->getExcludePattens();
+
+        if(empty($patterns)) { //quick short circuit if feature not used
+            return $phrases;
+        }
+
+        $scrubbedPhrases = array();
+        foreach($phrases as $phrase) {
+            $excluded = false;
+
+            foreach($patterns as $pattern) {
+                if(preg_match('/' . $pattern . '/', $phrase['code'])) {
+                    $excluded = true;
+                    break;
+                }
+            }
+
+            if(!$excluded) {
+                $scrubbedPhrases[] = $phrase;
+            }
+        }
+
+        return $scrubbedPhrases;
+    }
+
+    /**
+     * Store phrases to be found and written later
+     *
+     * @param array $phrases
+     */
     protected function _storeUntranslated(array $phrases) {
+        $phrases = $this->_scrubExcludedPhrases($phrases);
+
         foreach($phrases as $phrase) {
             $locale = $phrase['locale'];
 
