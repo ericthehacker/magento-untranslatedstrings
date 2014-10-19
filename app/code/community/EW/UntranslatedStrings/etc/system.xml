@@ -3,7 +3,12 @@
     <sections>
         <dev>
             <groups>
-                <translate_inline>
+                <ew_untranslatedstrings translate="label" module="ew_untranslatedstrings">
+                    <label>Untranslated Strings</label>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
                     <fields>
                         <untranslated_strings_enabled translate="label comment">
                             <label>Log Untranslated Strings</label>
@@ -94,7 +99,7 @@
                             </depends>
                         </untranslated_strings_locales>
                     </fields>
-                </translate_inline>
+                </ew_untranslatedstrings>
             </groups>
         </dev>
     </sections>
