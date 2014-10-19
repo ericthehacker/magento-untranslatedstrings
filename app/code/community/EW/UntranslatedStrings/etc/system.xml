@@ -3,7 +3,12 @@
     <sections>
         <dev>
             <groups>
-                <translate_inline>
+                <ew_untranslatedstrings translate="label" module="ew_untranslatedstrings">
+                    <label>Untranslated Strings</label>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
                     <fields>
                         <untranslated_strings_enabled translate="label comment">
                             <label>Log Untranslated Strings</label>
@@ -19,7 +24,64 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </untranslated_strings_enabled>
-                        <untranslated_strings_batch_locales_enabled>
+                        <untranslated_strings_ignore_admin translate="label comment">
+                            <label>Ignore Admin Strings</label>
+                            <comment>
+                                This is a convenience setting to allow you to enable the module
+                                at the default level, but actually ignore strings found in the admin. If you
+                                are interested in collecting admin untranslated strings, set to No.
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <config_path>dev/translate/untranslated_strings_ignore_admin</config_path>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <untranslated_strings_enabled>1</untranslated_strings_enabled>
+                            </depends>
+                        </untranslated_strings_ignore_admin>
+                        <untranslated_strings_enable_matching_key_value_pair translate="label comment">
+                            <label>Log Matching Key / Value Pairs</label>
+                            <comment>
+                                Should we log strings where the untranslated and translated strings match
+                                exactly? This often indicates actual translation gaps, as modules will
+                                provide entries which are not actually translated. If, on the other hand,
+                                you're only interested in strings which have no representation at all in
+                                translation files, set this to No.
+                                NOTE: For obvious reasons, this will result in many false positives for
+                                English locales.
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <config_path>dev/translate/untranslated_strings_enable_matching_key_value_pair</config_path>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <untranslated_strings_enabled>1</untranslated_strings_enabled>
+                            </depends>
+                        </untranslated_strings_enable_matching_key_value_pair>
+                        <untranslated_strings_exclude translate="label comment">
+                            <label>Code Exclude Patterns</label>
+                            <comment><![CDATA[Translation codes matching these regex patterns will be excluded.
+                                One pattern per line.
+                                Leave empty to include all untranslated strings.
+                                PROTIP: use "^MODULE_NAME::" pattern to match an entire module.]]>
+                            </comment>
+                            <frontend_type>textarea</frontend_type>
+                            <config_path>dev/translate/untranslated_strings_exclude</config_path>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <untranslated_strings_enabled>1</untranslated_strings_enabled>
+                            </depends>
+                        </untranslated_strings_exclude>
+                        <untranslated_strings_batch_locales_enabled translate="label comment">
                             <label>Batch Check Translation Locales</label>
                             <comment>
                                 If set to yes, you can select locale(s) to check when a string is translated,
@@ -30,7 +92,7 @@
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <config_path>dev/translate/untranslated_strings_batch_locales_enabled</config_path>
-                            <sort_order>110</sort_order>
+                            <sort_order>200</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -38,13 +100,13 @@
                                 <untranslated_strings_enabled>1</untranslated_strings_enabled>
                             </depends>
                         </untranslated_strings_batch_locales_enabled>
-                        <untranslated_strings_locales>
+                        <untranslated_strings_locales translate="label comment">
                             <label>Untranslated Locales to Log</label>
                             <comment>Instead of the store's configured locale, these locale(s) will be checked and logged.</comment>
                             <config_path>dev/translate/untranslated_strings_locales</config_path>
                             <frontend_type>multiselect</frontend_type>
                             <source_model>adminhtml/system_config_source_locale</source_model>
-                            <sort_order>120</sort_order>
+                            <sort_order>210</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -54,7 +116,7 @@
                             </depends>
                         </untranslated_strings_locales>
                     </fields>
-                </translate_inline>
+                </ew_untranslatedstrings>
             </groups>
         </dev>
     </sections>
