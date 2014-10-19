@@ -3,6 +3,7 @@
 class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
     private $_joinedStoreCode = false;
+    private $_interferWithCountSql = false;
 
     protected function _construct() {
         $this->_init('ew_untranslatedstrings/string');
@@ -29,6 +30,10 @@ class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_
      */
     public function getSelectCountSql()
     {
+        if(!$this->_interferWithCountSql) {
+            return parent::getSelectCountSql();
+        }
+
         $this->_renderFilters();
 
         $countSelect = clone $this->getSelect();
@@ -49,6 +54,10 @@ class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_
      */
     public function getAllIds()
     {
+        if(!$this->_interferWithCountSql) {
+            return parent::getAllIds();
+        }
+
         $idsSelect = clone $this->getSelect();
         $idsSelect->reset(Zend_Db_Select::ORDER);
         $idsSelect->reset(Zend_Db_Select::LIMIT_COUNT);
@@ -64,6 +73,8 @@ class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_
      * untranslated strings by locale.
      */
     public function configureSummary($topStringsCount = 10) {
+        $this->_interferWithCountSql = true;
+
         $this->getSelect()
              ->reset(Zend_Db_Select::COLUMNS)
              ->columns(
@@ -90,7 +101,5 @@ class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_
              ->distinct(true)
              ->group('locale')
              ->having('string_count > 0');
-
-        Mage::log($this->getSelect()->assemble());
     }
 }
