@@ -48,6 +48,76 @@ class EW_UntranslatedStrings_Adminhtml_UntranslatedController extends Mage_Admin
     }
 
     /**
+     * Purge single locale
+     */
+    public function purgeAction() {
+        $locale = $this->getRequest()->getParam('locale');
+
+        try {
+            if(empty($locale)) {
+                throw new Mage_Adminhtml_Exception(
+                    $this->__(
+                        'No locale supplied.'
+                    )
+                );
+            }
+
+            Mage::getModel('ew_untranslatedstrings/string')->purgeTranslatedRecords($locale);
+
+            Mage::getSingleton('adminhtml/session')->addSuccess(
+                $this->__(
+                    'Locale "%s" successfully purged.',
+                    $locale
+                )
+            );
+        } catch(Exception $ex) {
+            Mage::getSingleton('adminhtml/session')->addSuccess(
+                $this->__(
+                    'Error purging locale "%s".',
+                    $locale
+                )
+            );
+        }
+
+        $this->_redirect('*/*/index');
+    }
+
+    /**
+     * Truncate single locale
+     */
+    public function truncateAction() {
+        $locale = $this->getRequest()->getParam('locale');
+
+        try {
+            if(empty($locale)) {
+                throw new Mage_Adminhtml_Exception(
+                    $this->__(
+                        'No locale supplied.'
+                    )
+                );
+            }
+
+            Mage::getResourceModel('ew_untranslatedstrings/string')->truncateRecords($locale);
+
+            Mage::getSingleton('adminhtml/session')->addSuccess(
+                $this->__(
+                    'Locale "%s" successfully truncated.',
+                    $locale
+                )
+            );
+        } catch(Exception $ex) {
+            Mage::getSingleton('adminhtml/session')->addSuccess(
+                $this->__(
+                    'Error truncating locale "%s".',
+                    $locale
+                )
+            );
+        }
+
+        $this->_redirect('*/*/index');
+    }
+
+    /**
      * Mass truncates strings
      */
     public function massTruncateAction() {

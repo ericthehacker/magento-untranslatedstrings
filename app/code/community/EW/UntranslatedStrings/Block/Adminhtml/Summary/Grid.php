@@ -30,7 +30,9 @@ class EW_UntranslatedStrings_Block_Adminhtml_Summary_Grid extends Mage_Adminhtml
             'align'     => 'left',
             'width'     => '75px',
             'index'     => 'string_count',
-            'type'      => 'number'
+            'type'      => 'number',
+            'filter'    => false,
+            'sortable'  => false
         ));
 
 //        $this->addColumn('top_strings', array(
@@ -41,8 +43,37 @@ class EW_UntranslatedStrings_Block_Adminhtml_Summary_Grid extends Mage_Adminhtml
 //        ));
 
 
-
-        $this->addExportType('*/*/exportCsv', $this->__('CSV'));
+        $this->addColumn('action',
+            array(
+                'header'    => $this->__('Action'),
+                'width'     => '200px',
+                'type'      => 'action',
+                'getter'     => 'getLocale',
+                'actions'   => array(
+                    array(
+                        'caption' => $this->__('Purge'),
+                        'url'     => array(
+                            'base'=>'*/*/purge'
+                        ),
+                        'field'   => 'locale',
+                        'confirm' => $this->__(
+                            'This will update the string log for this locale and remove any that are now translated. Are you sure?'
+                        )
+                    ),
+                    array(
+                        'caption' => $this->__('Truncate'),
+                        'url'     => array(
+                            'base'=>'*/*/truncate'
+                        ),
+                        'field'   => 'locale',
+                        'confirm' => $this->__(
+                            'This delete all strings for this locale. Are you sure?'
+                        )
+                    )
+                ),
+                'filter'    => false,
+                'sortable'  => false
+            ));
 
         return parent::_prepareColumns();
     }
@@ -58,7 +89,9 @@ class EW_UntranslatedStrings_Block_Adminhtml_Summary_Grid extends Mage_Adminhtml
             'url'  => $this->getUrl(
                 '*/*/massPurge'
             ),
-            'confirm' => $this->__('This will purge the log of untranslated strings which are now translated. Are you sure?')
+            'confirm' => $this->__(
+                'This will update the string log for these locale(s) and remove any that are now translated. Are you sure?'
+            )
         ));
 
         $this->getMassactionBlock()->addItem('truncate', array(
