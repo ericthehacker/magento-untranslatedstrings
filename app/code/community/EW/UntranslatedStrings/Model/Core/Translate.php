@@ -5,7 +5,50 @@ class EW_UntranslatedStrings_Model_Core_Translate extends Mage_Core_Model_Transl
     const REGISTRY_KEY = 'ew_untranslatedstrings_string_buffer';
 
     /** @var array */
-    private $_localesToCheck = null;
+    protected $_localesToCheck = null;
+
+    protected $_allowMatchingKeyValuePairs = false;
+    protected $_allowLooseDevModuleMode = false;
+
+    /**
+     * Allow matching key / value translation pairs
+     * when loading translations?
+     *
+     * @return bool
+     */
+    public function getAllowMatchingKeyValuePairs() {
+        return $this->_allowMatchingKeyValuePairs;
+    }
+
+    /**
+     * Set if matching key / value translation pairs
+     * allowed when loading translations.
+     *
+     * @param bool $allow
+     */
+    public function setAllowMatchingKeyValuePairs($allow) {
+        $this->_allowMatchingKeyValuePairs = (bool)$allow;
+    }
+
+    /**
+     * Use native "Not allow use translation not related to module"
+     * check when loading translations?
+     *
+     * @return bool
+     */
+    public function getAllowLooseDevModuleMode() {
+        return $this->_allowLooseDevModuleMode;
+    }
+
+    /**
+     * Set if native "Not allow use translation not related to module"
+     * behavior used when loading translations.
+     *
+     * @param bool $allow
+     */
+    public function setAllowLooseDevModuleMode($allow) {
+        $this->_allowLooseDevModuleMode = (bool)$allow;
+    }
 
     /**
      * Get locales to check and store on local variable
@@ -63,6 +106,57 @@ class EW_UntranslatedStrings_Model_Core_Translate extends Mage_Core_Model_Transl
         }
 
         return parent::_getTranslatedString($text, $code);
+    }
+
+    /**
+     * Rewrite to allow optional key = value in data
+     * as well as optionally disabling developer mode check
+     *
+     * @param array $data
+     * @param string $scope
+     * @return Mage_Core_Model_Translate
+     */
+    protected function _addData($data, $scope, $forceReload=false)
+    {
+        foreach ($data as $key => $value) {
+            // BEGIN EDIT: conditionally exclude matching key value pairs
+            if(!$this->getAllowMatchingKeyValuePairs()) {
+                if ($key === $value) {
+                    continue;
+                }
+            }
+            // END EDIT
+            $key    = $this->_prepareDataString($key);
+            $value  = $this->_prepareDataString($value);
+            if ($scope && isset($this->_dataScope[$key]) && !$forceReload ) {
+                /**
+                 * Checking previos value
+                 */
+                $scopeKey = $this->_dataScope[$key] . self::SCOPE_SEPARATOR . $key;
+                if (!isset($this->_data[$scopeKey])) {
+                    if (isset($this->_data[$key])) {
+                        $this->_data[$scopeKey] = $this->_data[$key];
+                        /**
+                         * Not allow use translation not related to module
+                         */
+                        if (Mage::getIsDeveloperMode()) {
+                            // BEGIN EDIT: conditionally exclude module mismatch translations
+                            if(!$this->getAllowLooseDevModuleMode()) {
+                                unset($this->_data[$key]);
+                            }
+                            // END EDIT
+                        }
+                    }
+                }
+                $scopeKey = $scope . self::SCOPE_SEPARATOR . $key;
+                $this->_data[$scopeKey] = $value;
+            }
+            else {
+                $this->_data[$key]     = $value;
+                $this->_dataScope[$key]= $scope;
+            }
+        }
+        return $this;
     }
 
     protected function _storeUntranslated(array $phrases) {
