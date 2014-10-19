@@ -84,8 +84,11 @@ class EW_UntranslatedStrings_Adminhtml_UntranslatedController extends Mage_Admin
     protected function _isAllowed()
     {
         switch ($this->getRequest()->getActionName()) {
+            case 'index':
+                return Mage::getSingleton('admin/session')->isAllowed('report/ew_untranslatedstrings/activity_summary');
+                break;
             case 'report':
-                return Mage::getSingleton('admin/session')->isAllowed('report/ew_untranslatedstrings/report');
+                return Mage::getSingleton('admin/session')->isAllowed('report/ew_untranslatedstrings/activity_report');
                 break;
             default:
                 return Mage::getSingleton('admin/session')->isAllowed('report/ew_untranslatedstrings');
