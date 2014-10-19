@@ -4,6 +4,7 @@ class EW_UntranslatedStrings_Helper_Data extends Mage_Core_Helper_Abstract
 {
     const PROFILER_KEY = 'EW_UNTRANSLATED_STRINGS::ALL';
     const CONFIG_PATH_ENABLED = 'dev/translate/untranslated_strings_enabled';
+    const CONFIG_PATH_IGNORE_ADMIN = 'dev/translate/untranslated_strings_ignore_admin';
     const CONFIG_PATH_BATCH_LOCALES_ENABLED = 'dev/translate/untranslated_strings_batch_locales_enabled';
     const CONFIG_PATH_BATCH_LOCALES = 'dev/translate/untranslated_strings_locales';
 
@@ -16,7 +17,16 @@ class EW_UntranslatedStrings_Helper_Data extends Mage_Core_Helper_Abstract
      * @return bool
      */
     public function isEnabled() {
-        return (bool)Mage::getStoreConfig(self::CONFIG_PATH_ENABLED);
+        $enabled = (bool)Mage::getStoreConfig(self::CONFIG_PATH_ENABLED);
+
+        //ignore admin, if configured
+        $ignoreAdmin = (bool)Mage::getStoreConfig(self::CONFIG_PATH_IGNORE_ADMIN);
+        if($ignoreAdmin && Mage::app()->getStore()->getId() == Mage_Catalog_Model_Abstract::DEFAULT_STORE_ID) {
+            //we're in the admin, and configured to ignore it
+            return false;
+        }
+
+        return $enabled;
     }
 
     /**

@@ -83,6 +83,7 @@
         <dev>
             <translate>
                 <untranslated_strings_enabled>0</untranslated_strings_enabled>
+                <untranslated_strings_ignore_admin>1</untranslated_strings_ignore_admin>
                 <untranslated_strings_batch_locales_enabled>0</untranslated_strings_batch_locales_enabled>
             </translate>
         </dev>
