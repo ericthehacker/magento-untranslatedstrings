@@ -44,7 +44,27 @@ class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_
 
         //$countSelect->columns('COUNT(*)');
 
+        Mage::log($countSelect->assemble());
+
         return $countSelect;
+    }
+
+    /**
+     * Get collection size
+     *
+     * @return int
+     */
+    public function getSize()
+    {
+        if(!$this->_interferWithCountSql) {
+            return parent::getSize();
+        }
+
+        if (is_null($this->_totalRecords)) {
+            $sql = $this->getSelectCountSql();
+            $this->_totalRecords = count($this->getConnection()->fetchAll($sql, $this->_bindParams));
+        }
+        return intval($this->_totalRecords);
     }
 
     /**
@@ -81,8 +101,8 @@ class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_
                  array(
                      'string_count' => new Zend_Db_Expr(
                          sprintf(
-                             'sum(%s)',
-                             $this->getConnection()->quoteIdentifier('encounter_count')
+                             'count(%s)',
+                             $this->getConnection()->quoteIdentifier('untranslated_string')
                          )
                      ),
                      'locale',
