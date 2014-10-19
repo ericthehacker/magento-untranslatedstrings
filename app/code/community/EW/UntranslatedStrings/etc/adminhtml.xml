@@ -7,10 +7,14 @@
                     <title>Untranslated Strings</title>
                     <sort_order>1000</sort_order>
                     <children>
-                    <activity_report translate="title" module="reports">
-                        <title>Untranslated Strings Report</title>
-                        <action>adminhtml/untranslated/report</action>
-                    </activity_report>
+                        <activity_summary translate="title" module="ew_untranslatedstrings">
+                            <title>Untranslated Strings Summary</title>
+                            <action>adminhtml/untranslated/index</action>
+                        </activity_summary>
+                        <activity_report translate="title" module="ew_untranslatedstrings">
+                            <title>Untranslated Strings Report</title>
+                            <action>adminhtml/untranslated/report</action>
+                        </activity_report>
                     </children>
                 </ew_untranslatedstrings>
             </children>
@@ -25,9 +29,12 @@
                             <ew_untranslatedstrings translate="title" module="ew_untranslatedstrings">
                                 <title>Untranslated Strings</title>
                                 <children>
-                                    <activity translate="title">
+                                    <activity_index translate="title">
+                                        <title>Untranslated Strings Summary</title>
+                                    </activity_index>
+                                    <activity_report translate="title">
                                         <title>Untranslated Strings Report</title>
-                                    </activity>
+                                    </activity_report>
                                 </children>
                             </ew_untranslatedstrings>
                         </children>
