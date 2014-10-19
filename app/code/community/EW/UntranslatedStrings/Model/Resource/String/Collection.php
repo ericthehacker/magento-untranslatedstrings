@@ -44,8 +44,6 @@ class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_
 
         //$countSelect->columns('COUNT(*)');
 
-        Mage::log($countSelect->assemble());
-
         return $countSelect;
     }
 
