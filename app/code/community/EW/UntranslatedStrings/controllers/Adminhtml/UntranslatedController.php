@@ -19,6 +19,64 @@ class EW_UntranslatedStrings_Adminhtml_UntranslatedController extends Mage_Admin
     }
 
     /**
+     * Mass purges strings
+     */
+    public function massPurgeAction() {
+        $locales = $this->getRequest()->getParam('locales');
+
+        try {
+            foreach($locales as $locale) {
+                Mage::getModel('ew_untranslatedstrings/string')->purgeTranslatedRecords($locale);
+            }
+
+            Mage::getSingleton('adminhtml/session')->addSuccess(
+                $this->__(
+                    '%d locales successfully purged.',
+                    count($locales)
+                )
+            );
+        } catch(Exception $ex) {
+            Mage::getSingleton('adminhtml/session')->addError(
+                $this->__(
+                    'Error purging locales: %s',
+                    $ex->getMessage()
+                )
+            );
+        }
+
+        $this->_redirect('*/*/index');
+    }
+
+    /**
+     * Mass truncates strings
+     */
+    public function massTruncateAction() {
+        $locales = $this->getRequest()->getParam('locales');
+
+        try {
+            foreach($locales as $locale) {
+                Mage::getResourceModel('ew_untranslatedstrings/string')->truncateRecords($locale);
+            }
+
+            Mage::getSingleton('adminhtml/session')->addSuccess(
+                $this->__(
+                    '%d locales successfully truncated.',
+                    count($locales)
+                )
+            );
+        } catch(Exception $ex) {
+            Mage::getSingleton('adminhtml/session')->addError(
+                $this->__(
+                    'Error truncating locales: %s',
+                    $ex->getMessage()
+                )
+            );
+        }
+
+        $this->_redirect('*/*/index');
+    }
+
+    /**
      * Enforce ACL
      *
      * @return bool

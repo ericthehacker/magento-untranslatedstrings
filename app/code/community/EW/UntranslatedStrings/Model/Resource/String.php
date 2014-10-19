@@ -86,8 +86,23 @@ class EW_UntranslatedStrings_Model_Resource_String extends Mage_Core_Model_Resou
         return $rawResults;
     }
 
+    /**
+     * Deletes records in one query for the given string IDs
+     *
+     * @param array $ids
+     */
     public function purgeStrings(array $ids) {
         $where = $this->_getWriteAdapter()->quoteInto('id in (?)', $ids);
+        $this->_getWriteAdapter()->delete($this->getMainTable(), $where);
+    }
+
+    /**
+     * Deletes all records for the given locale
+     *
+     * @param $locale
+     */
+    public function truncateRecords($locale) {
+        $where = $this->_getWriteAdapter()->quoteInto('locale = ?', $locale);
         $this->_getWriteAdapter()->delete($this->getMainTable(), $where);
     }
 }

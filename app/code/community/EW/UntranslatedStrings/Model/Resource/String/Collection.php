@@ -23,6 +23,43 @@ class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_
     }
 
     /**
+     * Account for group and having clauses, if any
+     *
+     * @return Varien_Db_Select
+     */
+    public function getSelectCountSql()
+    {
+        $this->_renderFilters();
+
+        $countSelect = clone $this->getSelect();
+        $countSelect->reset(Zend_Db_Select::ORDER);
+        $countSelect->reset(Zend_Db_Select::LIMIT_COUNT);
+        $countSelect->reset(Zend_Db_Select::LIMIT_OFFSET);
+        //$countSelect->reset(Zend_Db_Select::COLUMNS);
+
+        //$countSelect->columns('COUNT(*)');
+
+        return $countSelect;
+    }
+
+    /**
+     * Account for group and having clauses, if any
+     *
+     * @return array
+     */
+    public function getAllIds()
+    {
+        $idsSelect = clone $this->getSelect();
+        $idsSelect->reset(Zend_Db_Select::ORDER);
+        $idsSelect->reset(Zend_Db_Select::LIMIT_COUNT);
+        $idsSelect->reset(Zend_Db_Select::LIMIT_OFFSET);
+        //$idsSelect->reset(Zend_Db_Select::COLUMNS);
+
+        $idsSelect->columns($this->getResource()->getIdFieldName(), 'main_table');
+        return $this->getConnection()->fetchCol($idsSelect);
+    }
+
+    /**
      * Configures collection to be summary of
      * untranslated strings by locale.
      */
@@ -51,6 +88,9 @@ class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_
 
         $this->getSelect()
              ->distinct(true)
-             ->group('locale');
+             ->group('locale')
+             ->having('string_count > 0');
+
+        Mage::log($this->getSelect()->assemble());
     }
 }

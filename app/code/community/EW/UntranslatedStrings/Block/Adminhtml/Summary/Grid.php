@@ -48,13 +48,25 @@ class EW_UntranslatedStrings_Block_Adminhtml_Summary_Grid extends Mage_Adminhtml
     }
 
     protected function _prepareMassaction() {
-        $this->setMassactionIdField('id');
-        $this->getMassactionBlock()->setFormFieldName('locale2');
+        $this->setMassactionIdField('locale');
+        $this->setMassactionIdFilter('locale');
+        $this->setMassactionIdFieldOnlyIndexValue(true);
+        $this->getMassactionBlock()->setFormFieldName('locales');
 
         $this->getMassactionBlock()->addItem('purge', array(
-            'label' => $this->__('Purge'),
-            'url' => $this->getUrl('*/*/massPurge'),
-            'confirm' => $this->__('Are you sure?')
+            'label'=> $this->__('Purge'),
+            'url'  => $this->getUrl(
+                '*/*/massPurge'
+            ),
+            'confirm' => $this->__('This will purge the log of untranslated strings which are now translated. Are you sure?')
+        ));
+
+        $this->getMassactionBlock()->addItem('truncate', array(
+            'label'=> $this->__('Truncate'),
+            'url'  => $this->getUrl(
+                '*/*/massTruncate'
+            ),
+            'confirm' => $this->__('This will remove all untranslated string logs for the selected locale(s). Are you sure?')
         ));
     }
 }
