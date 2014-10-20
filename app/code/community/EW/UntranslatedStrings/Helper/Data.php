@@ -79,6 +79,7 @@ class EW_UntranslatedStrings_Helper_Data extends Mage_Core_Helper_Abstract
             $translate->setLocale($locale);
             $translate->setAllowLooseDevModuleMode(true); //prevent native dev mode differences
             $translate->setAllowMatchingKeyValuePairs($allowMatchingKeyValuePairs);
+            //$translate->setThemeContext($storeId); //@todo: conditionally rig translator for store
             $translate->init(Mage_Core_Model_Design_Package::DEFAULT_AREA);
 
 
