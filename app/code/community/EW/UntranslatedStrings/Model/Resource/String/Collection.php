@@ -93,6 +93,8 @@ class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_
     public function configureSummary($topStringsCount = 10) {
         $this->_interferWithCountSql = true;
 
+        $this->joinStoreCode();
+
         $this->getSelect()
              ->reset(Zend_Db_Select::COLUMNS)
              ->columns(
@@ -104,6 +106,9 @@ class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_
                          )
                      ),
                      'locale',
+                     'store_id',
+                     'locale_store' => new Zend_Db_Expr('CONCAT(main_table.store_id,\'-\',locale)'), //convenience column -- useful for magento grids
+                     'store_code' => 'stores.code',
                      'top_strings' => new Zend_Db_Expr(
                          sprintf(
                              'SUBSTRING_INDEX(GROUP_CONCAT(%s ORDER BY %s SEPARATOR \'\n\'), \'\n\', %d)',
@@ -117,7 +122,7 @@ class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_
 
         $this->getSelect()
              ->distinct(true)
-             ->group('locale')
+             ->group(array('store_id', 'locale'))
              ->having('string_count > 0');
     }
 }

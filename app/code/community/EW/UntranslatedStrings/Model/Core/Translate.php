@@ -9,6 +9,7 @@ class EW_UntranslatedStrings_Model_Core_Translate extends Mage_Core_Model_Transl
 
     protected $_allowMatchingKeyValuePairs = false;
     protected $_allowLooseDevModuleMode = false;
+    protected $_themeStore = null;
 
     /**
      * Allow matching key / value translation pairs
@@ -61,6 +62,16 @@ class EW_UntranslatedStrings_Model_Core_Translate extends Mage_Core_Model_Transl
         }
 
         return $this->_localesToCheck;
+    }
+
+    /**
+     * If called before init(), override the theme context
+     * from which translations will be loaded.
+     *
+     * @param int $storeId
+     */
+    public function setThemeContext($storeId) {
+        $this->_themeStore = $storeId;
     }
 
     public function hasTranslation($text, $code) {
@@ -234,5 +245,47 @@ class EW_UntranslatedStrings_Model_Core_Translate extends Mage_Core_Model_Transl
             //whether new or just augmented, set registry key again
             Mage::register(self::REGISTRY_KEY, $strings);
         }
+    }
+
+    /**
+     * Get theme translation file. If override store set,
+     * get file from that store's theme. Otherwise, get current
+     * design package's translation file.
+     *
+     * @return string
+     */
+    protected function _getThemeTranslationFile() {
+        if(!is_null($this->_themeStore)) {
+            // Start store emulation process
+            $appEmulation = Mage::getSingleton('core/app_emulation');
+            $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($this->_themeStore);
+
+            /* @var $design Mage_Core_Model_Design_Package */
+            $design = Mage::getModel('core/design_package');
+            $file = $design->getLocaleFileName('translate.csv');
+
+            // Stop store emulation process
+            $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+
+            return $file;
+        }
+
+        //fallback to default behavior
+        return Mage::getDesign()->getLocaleFileName('translate.csv');
+    }
+
+    /**
+     * Rewrite to allow theme to be specified
+     *
+     * @param bool $forceReload
+     * @return Mage_Core_Model_Translate
+     */
+    protected function _loadThemeTranslation($forceReload = false)
+    {
+        // BEGIN EDIT: call _getThemeTranslationFile() to get theme translate file path
+        $file = $this->_getThemeTranslationFile();
+        // END EDIT
+        $this->_addData($this->_getFileData($file), false, $forceReload);
+        return $this;
     }
 }

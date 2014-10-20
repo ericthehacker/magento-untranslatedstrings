@@ -22,17 +22,19 @@ class EW_UntranslatedStrings_Adminhtml_UntranslatedController extends Mage_Admin
      * Mass purges strings
      */
     public function massPurgeAction() {
-        $locales = $this->getRequest()->getParam('locales');
+        $localeStores = $this->getRequest()->getParam('locale_store');
 
         try {
-            foreach($locales as $locale) {
-                Mage::getModel('ew_untranslatedstrings/string')->purgeTranslatedRecords($locale);
+            foreach($localeStores as $localeStore) {
+                $parts = explode('-', $localeStore);
+
+                Mage::getModel('ew_untranslatedstrings/string')->purgeTranslatedRecords($parts[1], $parts[0]);
             }
 
             Mage::getSingleton('adminhtml/session')->addSuccess(
                 $this->__(
                     '%d locales successfully purged.',
-                    count($locales)
+                    count($localeStores)
                 )
             );
         } catch(Exception $ex) {
@@ -51,10 +53,11 @@ class EW_UntranslatedStrings_Adminhtml_UntranslatedController extends Mage_Admin
      * Purge single locale
      */
     public function purgeAction() {
-        $locale = $this->getRequest()->getParam('locale');
+        $localeStore = $this->getRequest()->getParam('locale_store');
+        $parts = explode('-', $localeStore);
 
         try {
-            if(empty($locale)) {
+            if(empty($parts)) {
                 throw new Mage_Adminhtml_Exception(
                     $this->__(
                         'No locale supplied.'
@@ -62,19 +65,19 @@ class EW_UntranslatedStrings_Adminhtml_UntranslatedController extends Mage_Admin
                 );
             }
 
-            Mage::getModel('ew_untranslatedstrings/string')->purgeTranslatedRecords($locale);
+            Mage::getModel('ew_untranslatedstrings/string')->purgeTranslatedRecords($parts[1], $parts[0]);
 
             Mage::getSingleton('adminhtml/session')->addSuccess(
                 $this->__(
                     'Locale "%s" successfully purged.',
-                    $locale
+                    $parts[0]
                 )
             );
         } catch(Exception $ex) {
             Mage::getSingleton('adminhtml/session')->addSuccess(
                 $this->__(
                     'Error purging locale "%s".',
-                    $locale
+                    $ex->getMessage()
                 )
             );
         }
@@ -86,10 +89,11 @@ class EW_UntranslatedStrings_Adminhtml_UntranslatedController extends Mage_Admin
      * Truncate single locale
      */
     public function truncateAction() {
-        $locale = $this->getRequest()->getParam('locale');
+        $localeStore = $this->getRequest()->getParam('locale_store');
+        $parts = explode('-', $localeStore);
 
         try {
-            if(empty($locale)) {
+            if(empty($parts)) {
                 throw new Mage_Adminhtml_Exception(
                     $this->__(
                         'No locale supplied.'
@@ -97,19 +101,19 @@ class EW_UntranslatedStrings_Adminhtml_UntranslatedController extends Mage_Admin
                 );
             }
 
-            Mage::getResourceModel('ew_untranslatedstrings/string')->truncateRecords($locale);
+            Mage::getResourceModel('ew_untranslatedstrings/string')->truncateRecords($parts[1], $parts[0]);
 
             Mage::getSingleton('adminhtml/session')->addSuccess(
                 $this->__(
                     'Locale "%s" successfully truncated.',
-                    $locale
+                    $parts[0]
                 )
             );
         } catch(Exception $ex) {
             Mage::getSingleton('adminhtml/session')->addSuccess(
                 $this->__(
                     'Error truncating locale "%s".',
-                    $locale
+                    $ex->getMessage()
                 )
             );
         }
@@ -121,17 +125,19 @@ class EW_UntranslatedStrings_Adminhtml_UntranslatedController extends Mage_Admin
      * Mass truncates strings
      */
     public function massTruncateAction() {
-        $locales = $this->getRequest()->getParam('locales');
+        $localeStores = $this->getRequest()->getParam('locale_store');
 
         try {
-            foreach($locales as $locale) {
-                Mage::getResourceModel('ew_untranslatedstrings/string')->truncateRecords($locale);
+            foreach($localeStores as $localeStore) {
+                $parts = explode('-', $localeStore);
+
+                Mage::getResourceModel('ew_untranslatedstrings/string')->truncateRecords($parts[1], $parts[0]);
             }
 
             Mage::getSingleton('adminhtml/session')->addSuccess(
                 $this->__(
                     '%d locales successfully truncated.',
-                    count($locales)
+                    count($localeStores)
                 )
             );
         } catch(Exception $ex) {
