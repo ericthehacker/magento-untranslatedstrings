@@ -277,6 +277,7 @@ class EW_UntranslatedStrings_Model_Core_Translate extends Mage_Core_Model_Transl
     /**
      * Rewrite to allow theme to be specified
      *
+     * @param bool $forceReload
      * @return Mage_Core_Model_Translate
      */
     protected function _loadThemeTranslation($forceReload = false)

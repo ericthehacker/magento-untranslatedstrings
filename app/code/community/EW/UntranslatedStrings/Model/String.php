@@ -10,12 +10,18 @@ class EW_UntranslatedStrings_Model_String extends Mage_Core_Model_Abstract
      * Purge strings which ARE translated
      *
      * @param $locale
+     * @param $storeId
      */
-    public function purgeTranslatedRecords($locale) {
+    public function purgeTranslatedRecords($locale, $storeId) {
         $strings = $this->getResource()->getLocaleStrings($locale);
 
         /* @var $translate EW_UntranslatedStrings_Model_Core_Translate */
-        $translate = Mage::helper('ew_untranslatedstrings')->getTranslator($locale);
+        $translate = Mage::helper('ew_untranslatedstrings')->getTranslator(
+            $locale,
+            null,       //allow config to determine if matching key / value allowed
+            $storeId,   //set translator to use store's theme
+            true        //disable cache when purging
+        );
 
         $purgeIds = array();
         foreach($strings as $string) {
