@@ -17,7 +17,7 @@ class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_
             $this->join(
                 array('stores' => 'core/store'),
                 '`stores`.`store_id` = `main_table`.`store_id`',
-                array('store_code' => 'stores.code')
+                array('stores.code')
             );
         }
         $this->_joinedStoreCode = true;
@@ -108,7 +108,7 @@ class EW_UntranslatedStrings_Model_Resource_String_Collection extends Mage_Core_
                      'locale',
                      'store_id',
                      'locale_store' => new Zend_Db_Expr('CONCAT(main_table.store_id,\'-\',locale)'), //convenience column -- useful for magento grids
-                     'store_code' => 'stores.code',
+                     'stores.code',
                      'top_strings' => new Zend_Db_Expr(
                          sprintf(
                              'SUBSTRING_INDEX(GROUP_CONCAT(%s ORDER BY %s SEPARATOR \'\n\'), \'\n\', %d)',

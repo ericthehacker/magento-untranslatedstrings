@@ -18,10 +18,10 @@ class EW_UntranslatedStrings_Block_Adminhtml_Summary_Grid extends Mage_Adminhtml
     }
 
     protected function _prepareColumns() {
-        $this->addColumn('store_code', array(
+        $this->addColumn('code', array(
             'header'    => $this->__('Store'),
             'align'     => 'left',
-            'index'     => 'store_code',
+            'index'     => 'code',
         ));
 
         $this->addColumn('locale', array(

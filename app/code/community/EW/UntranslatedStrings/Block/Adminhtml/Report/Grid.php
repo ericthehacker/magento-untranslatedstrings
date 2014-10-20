@@ -27,11 +27,11 @@ class EW_UntranslatedStrings_Block_Adminhtml_Report_Grid extends Mage_Adminhtml_
             'type'      => 'number'
         ));
 
-        $this->addColumn('store_code', array(
+        $this->addColumn('code', array(
             'header'    => $this->__('Store Code'),
             'align'     => 'left',
             'width'     => '75px',
-            'index'     => 'store_code',
+            'index'     => 'code',
         ));
 
         $this->addColumn('untranslated_string', array(
