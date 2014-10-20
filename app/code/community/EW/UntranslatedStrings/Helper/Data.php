@@ -60,9 +60,11 @@ class EW_UntranslatedStrings_Helper_Data extends Mage_Core_Helper_Abstract
      *
      * @param $locale
      * @param bool $allowMatchingKeyValuePairs - matching key / value pairs count as translations
+     * @param null $storeIdContext
+     * @param bool $forceRefresh
      * @return EW_UntranslatedStrings_Model_Core_Translate
      */
-    public function getTranslator($locale, $allowMatchingKeyValuePairs = null) {
+    public function getTranslator($locale, $allowMatchingKeyValuePairs = null, $storeIdContext = null, $forceRefresh = false) {
         if(!isset($this->_translators[$locale])) {
             if(is_null($allowMatchingKeyValuePairs)) {
                 // "allow" and "log" are opposite concepts
@@ -79,8 +81,10 @@ class EW_UntranslatedStrings_Helper_Data extends Mage_Core_Helper_Abstract
             $translate->setLocale($locale);
             $translate->setAllowLooseDevModuleMode(true); //prevent native dev mode differences
             $translate->setAllowMatchingKeyValuePairs($allowMatchingKeyValuePairs);
-            $translate->init(Mage_Core_Model_Design_Package::DEFAULT_AREA);
-
+            if(!is_null($storeIdContext)) {
+                $translate->setThemeContext($storeIdContext);
+            }
+            $translate->init(Mage_Core_Model_Design_Package::DEFAULT_AREA, $forceRefresh);
 
             $this->_translators[$locale] = $translate;
         }

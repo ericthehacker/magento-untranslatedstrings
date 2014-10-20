@@ -18,6 +18,11 @@ class EW_UntranslatedStrings_Block_Adminhtml_Summary_Grid extends Mage_Adminhtml
     }
 
     protected function _prepareColumns() {
+        $this->addColumn('store_code', array(
+            'header'    => $this->__('Store'),
+            'align'     => 'left',
+            'index'     => 'store_code',
+        ));
 
         $this->addColumn('locale', array(
             'header'    => $this->__('Locale'),
@@ -48,14 +53,14 @@ class EW_UntranslatedStrings_Block_Adminhtml_Summary_Grid extends Mage_Adminhtml
                 'header'    => $this->__('Action'),
                 'width'     => '200px',
                 'type'      => 'action',
-                'getter'     => 'getLocale',
+                'getter'     => 'getLocaleStore',
                 'actions'   => array(
                     array(
                         'caption' => $this->__('Purge'),
                         'url'     => array(
                             'base'=>'*/*/purge'
                         ),
-                        'field'   => 'locale',
+                        'field'   => 'locale_store',
                         'confirm' => $this->__(
                             'This will update the string log for this locale and remove any that are now translated. Are you sure?'
                         )
@@ -65,7 +70,7 @@ class EW_UntranslatedStrings_Block_Adminhtml_Summary_Grid extends Mage_Adminhtml
                         'url'     => array(
                             'base'=>'*/*/truncate'
                         ),
-                        'field'   => 'locale',
+                        'field'   => 'locale_store',
                         'confirm' => $this->__(
                             'This delete all strings for this locale. Are you sure?'
                         )
@@ -79,10 +84,10 @@ class EW_UntranslatedStrings_Block_Adminhtml_Summary_Grid extends Mage_Adminhtml
     }
 
     protected function _prepareMassaction() {
-        $this->setMassactionIdField('locale');
-        $this->setMassactionIdFilter('locale');
+        $this->setMassactionIdField('locale_store');
+        $this->setMassactionIdFilter('locale_store');
         $this->setMassactionIdFieldOnlyIndexValue(true);
-        $this->getMassactionBlock()->setFormFieldName('locales');
+        $this->getMassactionBlock()->setFormFieldName('locale_store');
 
         $this->getMassactionBlock()->addItem('purge', array(
             'label'=> $this->__('Purge'),
