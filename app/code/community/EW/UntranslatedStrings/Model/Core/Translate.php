@@ -82,6 +82,13 @@ class EW_UntranslatedStrings_Model_Core_Translate extends Mage_Core_Model_Transl
         return false;
     }
 
+    /**
+     * Evaluate translated text and code and determine
+     * if they are untranslated.
+     *
+     * @param string $text
+     * @param string $code
+     */
     protected function _checkTranslatedString($text, $code) {
         Varien_Profiler::start(__CLASS__ . '::' . __FUNCTION__);
         Varien_Profiler::start(EW_UntranslatedStrings_Helper_Data::PROFILER_KEY);

@@ -11,7 +11,7 @@ class EW_UntranslatedStrings_Block_Adminhtml_Report_Grid extends Mage_Adminhtml_
         /* var $collection EW_UntranslatedStrings_Model_Resource_String_Collection */
         $collection = Mage::getResourceModel('ew_untranslatedstrings/string_collection');
         $collection->joinStoreCode();
-        $collection->setOrder('encounter_count', Varien_Db_Select::SQL_DESC);
+        //$collection->setOrder('encounter_count', Varien_Db_Select::SQL_DESC); //causes problems with grid sorting
 
         $this->setCollection($collection);
 
