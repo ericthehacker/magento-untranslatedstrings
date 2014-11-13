@@ -1,10 +1,7 @@
 {
-  "name":"ericthehacker/untranslatedstrings",
-  "license": "MIT",
+  "name": "ericthehacker/untranslatedstrings",
   "type": "magento-module",
-  "description": "Log untranslated strings according to Locale",
-  "homepage":"https://github.com/ericthehacker/magento-untranslatedstrings",
   "suggest": {
     "magento-hackathon/magento-composer-installer": "*"
-  }
+  } 
 }
