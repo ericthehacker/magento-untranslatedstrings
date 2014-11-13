@@ -1,5 +1,5 @@
 {
-  "name": "ericthehacker/untranslatedstrings",
+  "name":"ericthehacker/untranslatedstrings",
   "licence": "MIT",
   "type": "magento-module",
   "description": "Log untranslated strings according to Locale",
