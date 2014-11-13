@@ -1,0 +1,7 @@
+{
+  "name": "ericthehacker/untranslatedstrings",
+  "type": "magento-module",
+  "suggest": {
+    "magento-hackathon/magento-composer-installer": "*"
+  } 
+}
